@@ -1,0 +1,5 @@
+DỰ ÁN DÙNG TIPESCRIPT
+Đã cài TypeScript npm install --save-dev typescript @types/react @types/node
+Chạy dự án
+npm run dev
+npm start
