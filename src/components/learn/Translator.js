@@ -17,10 +17,14 @@ const Translator = () => {
   const handleSave = () => {
     // Logic để lưu bản dịch vào database sau khi kết nối backend
     console.log('Saving translation:', translatedText);
+
+    // Reset dữ liệu trên các textarea về trạng thái ban đầu
+    setInputText('');
+    setTranslatedText('');
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-2 mt-5 mb-2 mr-10">
       <div className="flex flex-col md:flex-row items-center">
         <textarea
           className="w-[450px] h-[150px] p-2 border border-gray-300 rounded-md resize-none"
@@ -38,10 +42,10 @@ const Translator = () => {
           placeholder="Bản dịch sẽ hiện ở đây..."
         />
       </div>
-      <div className="flex justify-center mt-12"> {/* Căn giữa nút Save và thêm margin top */}
+      <div className="flex justify-center mt-5"> {/* Căn giữa nút Save và thêm margin top */}
         <button
           onClick={handleSave}
-          className="bg-blue-500 text-white py-2 px-4 rounded-md mt-12"
+          className="bg-blue-500 text-white py-2 px-4 rounded-md mt-5"
         >
           Save
         </button>
