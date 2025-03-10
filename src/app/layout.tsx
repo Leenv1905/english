@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+// TRANG NÀY PHẢI CÓ ĐỂ BỌC LẠI TOÀN BỘ ỨNG DỤNG
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

@@ -11,7 +11,7 @@ const Review: React.FC = () => {
 
   // Giả định danh sách các từ mới đã học
   const words = [
-    { english: 'Hello', translation: 'Xin chào', date: '2025-03-01' },
+    { english: 'Hello', translation: 'Xin chào tôi là văn thanh, tôi năm nay 33 tuổi Xin chào tôi là văn thanh, tôi năm nay 33 tuổi Xin chào tôi là văn thanh, tôi năm nay 33 tuổi', date: '2025-03-01' },
     { english: 'Goodbye', translation: 'Tạm biệt', date: '2025-03-02' },
     { english: 'Thank you', translation: 'Cảm ơn', date: '2025-03-03' },
     { english: 'Yes', translation: 'Vâng', date: '2025-03-04' },

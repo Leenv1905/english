@@ -99,7 +99,8 @@ return (
                   setShowEnglish(newShowEnglish);
                 }}
               >
-                🔍
+                😘
+                {/* DÙNG HTML SYMBOLS */}
               </button>
             </div>
             <textarea
