@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import LayoutHome from '../../components/home/LayoutHome';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -26,6 +27,7 @@ const Login: React.FC = () => {
   };
 
   return (
+    <LayoutHome>
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-3xl font-bold mb-4">Login</h1>
       <form onSubmit={handleLogin} className="flex flex-col space-y-4">
@@ -53,6 +55,7 @@ const Login: React.FC = () => {
         </button>
       </form>
     </div>
+    </LayoutHome>
   );
 };
 

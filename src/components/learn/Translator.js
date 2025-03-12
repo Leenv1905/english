@@ -45,7 +45,7 @@ const Translator = () => {
       <div className="flex justify-center mt-5"> {/* Căn giữa nút Save và thêm margin top */}
         <button
           onClick={handleSave}
-          className="bg-blue-500 text-white py-2 px-4 rounded-md mt-5"
+          className="bg-blue-500 text-white py-2 px-4 rounded-md mt-5 cursor-pointer"
         >
           Save
         </button>

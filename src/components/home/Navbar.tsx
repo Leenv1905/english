@@ -90,11 +90,11 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="fixed top-0 left-0 p-4 z-50">
-{/*<nav className="fixed top-0 left-0 w-full bg-transparent text-white py-3 px-6 flex items-center z-50"> */}
+      {/*<nav className="fixed top-0 left-0 w-full bg-transparent text-white py-3 px-6 flex items-center z-50"> */}
 
       {/* Nút mở menu */}
       <button
-        className="ml-5 text-gray-800 bg-transparent px-4 py-2 rounded-md shadow-md"
+        className="ml-5 text-gray-800 bg-transparent px-4 py-2 rounded-md shadow-md cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
         <svg
@@ -124,11 +124,25 @@ const Navbar: React.FC = () => {
             { label: "Learn", href: "/learn" },
             { label: "Review", href: "/review" },
           ].map((item, index) => (
-            <li key={index} className="px-4 py-2 hover:bg-blue-100">
-              <Link href={item.href} onClick={() => setIsOpen(false)}>
+            // <li key={index} className="px-4 py-2 hover:bg-blue-100">
+            //   <Link href={item.href} onClick={() => setIsOpen(false)}>
+            //     {item.label}
+            //   </Link>
+            // </li>
+            // CÁCH PHÍA DƯỚI ÁP DỤNG ĐIỀU HƯỚNG CHO TOÀN BỘ THẺ LI THAY CHO CÁC TỪ TRONG THẺ LINK
+            <li
+              key={index}
+              className="px-4 py-2 hover:bg-blue-100 w-full cursor-pointer"
+              onClick={() => {
+                setIsOpen(false);
+                window.location.href = item.href; // Điều hướng thủ công
+              }}
+            >
+              <Link href={item.href} className="block w-full h-full text-center">
                 {item.label}
               </Link>
             </li>
+
           ))}
         </ul>
       )}

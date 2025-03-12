@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import LayoutHome from '../../components/home/LayoutHome';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -32,6 +33,8 @@ const Register: React.FC = () => {
   };
 
   return (
+    <LayoutHome>
+
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-3xl font-bold mb-4">Register</h1>
       <form onSubmit={handleRegister} className="flex flex-col space-y-4">
@@ -67,6 +70,8 @@ const Register: React.FC = () => {
         </button>
       </form>
     </div>
+    </LayoutHome>
+
   );
 };
 
