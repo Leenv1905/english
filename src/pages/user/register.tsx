@@ -35,12 +35,12 @@ const Register: React.FC = () => {
   return (
     <LayoutHome>
 
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col text-gray-500 items-center justify-center h-screen">
       <h1 className="text-3xl font-bold mb-4">Register</h1>
       <form onSubmit={handleRegister} className="flex flex-col space-y-4">
         <input
           type="email"
-          className="p-2 border border-gray-300 rounded-md"
+          className="p-2 border text-gray-600 border-gray-300 rounded-md"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -48,7 +48,7 @@ const Register: React.FC = () => {
         />
         <input
           type="password"
-          className="p-2 border border-gray-300 rounded-md"
+          className="p-2 border text-gray-600 border-gray-300 rounded-md"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -56,7 +56,7 @@ const Register: React.FC = () => {
         />
         <input
           type="password"
-          className="p-2 border border-gray-300 rounded-md"
+          className="p-2 border text-gray-600 border-gray-300 rounded-md"
           placeholder="Confirm Password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}

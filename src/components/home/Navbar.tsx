@@ -1,84 +1,27 @@
-// import React, { useState, useEffect } from "react";
-// import Link from "next/link";
-
-// const Navbar: React.FC = () => {
-//   const [isOpen, setIsOpen] = useState(false);
-//   const [isClient, setIsClient] = useState(false);
-
-//   useEffect(() => {
-//     setIsClient(true);
-//   }, []);
-
-//   const toggleMenu = () => {
-//     setIsOpen(!isOpen);
-//   };
-
-//   return (
-//     <nav className="fixed top-0 left-0 w-full bg-transparent text-white py-3 px-6 flex items-center z-50">
-//       {/* Nút mở menu */}
-//       <button
-//         className="bg-transparent text-gray-800 focus:outline-none"
-//         onClick={toggleMenu}
-//       >
-//         <svg
-//           className="w-8 h-8"
-//           fill="none"
-//           stroke="currentColor"
-//           viewBox="0 0 24 24"
-//           xmlns="http://www.w3.org/2000/svg"
-//         >
-//           <path
-//             strokeLinecap="round"
-//             strokeLinejoin="round"
-//             strokeWidth="2"
-//             d="M4 6h16M4 12h16m-7 6h7"
-//           ></path>
-//         </svg>
-//       </button>
-
-//       {/* Dropdown Menu */}
-//       {isClient && (
-//         <ul
-//           className={`absolute top-14 left-4 bg-white text-gray-800 shadow-lg rounded-md py-2 w-40 transition-all duration-300 ${
-//             isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
-//           }`}
-//         >
-//           <li className="px-4 py-2 hover:bg-blue-100">
-//             <Link href="/" className="block">
-//               Home
-//             </Link>
-//           </li>
-//           <li className="px-4 py-2 hover:bg-blue-100">
-//             <Link href="/learn" className="block">
-//               Learn
-//             </Link>
-//           </li>
-//           <li className="px-4 py-2 hover:bg-blue-100">
-//             <Link href="/review" className="block">
-//               Review
-//             </Link>
-//           </li>
-//         </ul>
-//       )}
-//     </nav>
-//   );
-// };
-
-// export default Navbar;
-
-
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import  {useRouter} from "next/router"
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const menuRef = useRef<HTMLUListElement>(null);
+  const accountMenuRef = useRef<HTMLUListElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
+    // Kiểm tra trạng thái đăng nhập từ localStorage
+    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(loggedIn);
+
     // Xử lý khi click ra ngoài menu
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsOpen(false);
+      }
+      if (accountMenuRef.current && !accountMenuRef.current.contains(event.target as Node)) {
+        setIsAccountMenuOpen(false);
       }
     };
 
@@ -88,13 +31,19 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
-  return (
-    <nav className="fixed top-0 left-0 p-4 z-50">
-      {/*<nav className="fixed top-0 left-0 w-full bg-transparent text-white py-3 px-6 flex items-center z-50"> */}
+  const handleLogout = () => {
+    localStorage.setItem("isLoggedIn", "false");
+    setIsLoggedIn(false);
+    setIsAccountMenuOpen(false);
+    router.push("/"); // Điều hướng về trang chủ sau khi đăng xuất
+    // Đây là 1 cách điều hướng của Next.js
+  };
 
+  return (
+    <nav className="fixed top-0 left-0 w-full bg-transparent text-white py-3 px-6 flex items-center justify-between z-50">
       {/* Nút mở menu */}
       <button
-        className="ml-5 text-gray-800 bg-transparent px-4 py-2 rounded-md shadow-md cursor-pointer"
+        className="text-gray-800 bg-transparent px-4 py-2 rounded-md shadow-md cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
         <svg
@@ -117,19 +66,13 @@ const Navbar: React.FC = () => {
       {isOpen && (
         <ul
           ref={menuRef}
-          className="absolute text-center text-green-600 left-5 mt-1 bg-white shadow-lg rounded-md py-2 w-22"
+          className="absolute mt-45 text-center text-green-600 left-2 bg-white shadow-lg rounded-md py-2 w-22 z-50"
         >
           {[
             { label: "Home", href: "/" },
             { label: "Learn", href: "/learn" },
             { label: "Review", href: "/review" },
           ].map((item, index) => (
-            // <li key={index} className="px-4 py-2 hover:bg-blue-100">
-            //   <Link href={item.href} onClick={() => setIsOpen(false)}>
-            //     {item.label}
-            //   </Link>
-            // </li>
-            // CÁCH PHÍA DƯỚI ÁP DỤNG ĐIỀU HƯỚNG CHO TOÀN BỘ THẺ LI THAY CHO CÁC TỪ TRONG THẺ LINK
             <li
               key={index}
               className="px-4 py-2 hover:bg-blue-100 w-full cursor-pointer"
@@ -142,8 +85,70 @@ const Navbar: React.FC = () => {
                 {item.label}
               </Link>
             </li>
-
           ))}
+        </ul>
+      )}
+
+      {/* Nút Account */}
+      <button
+        className="text-gray-800 bg-transparent px-4 py-2 rounded-md shadow-md cursor-pointer ml-auto mr-4 z-50"
+        onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
+      >
+        &#128100; {/* HTML symbol cho icon account */}
+      </button>
+
+      {/* Account Menu */}
+      {isAccountMenuOpen && (
+        <ul
+          ref={accountMenuRef}
+          className="absolute text-center text-green-600 right-5 mt-45 bg-white shadow-lg rounded-md py-2 w-22 z-50"
+        >
+          {isLoggedIn ? (
+            <>
+              <li
+                className="px-4 py-2 hover:bg-blue-100 w-full cursor-pointer"
+                onClick={() => {
+                  setIsAccountMenuOpen(false);
+                  window.location.href = "/user/account"; // Điều hướng thủ công
+                }}
+              >
+                <Link href="/user/account" className="block w-full h-full text-center">
+                  My Account
+                </Link>
+              </li>
+              <li
+                className="px-4 py-2 hover:bg-blue-100 w-full cursor-pointer"
+                onClick={handleLogout}
+              >
+                Logout
+              </li>
+            </>
+          ) : (
+            <>
+              <li
+                className="px-4 py-2 hover:bg-blue-100 w-full cursor-pointer"
+                onClick={() => {
+                  setIsAccountMenuOpen(false);
+                  window.location.href = "/user/login"; // Điều hướng thủ công
+                }}
+              >
+                <Link href="/user/login" className="block w-full h-full text-center">
+                  Login
+                </Link>
+              </li>
+              <li
+                className="px-4 py-2 hover:bg-blue-100 w-full cursor-pointer"
+                onClick={() => {
+                  setIsAccountMenuOpen(false);
+                  window.location.href = "/user/register"; // Điều hướng thủ công
+                }}
+              >
+                <Link href="/user/register" className="block w-full h-full text-center">
+                  Register
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
       )}
     </nav>

@@ -25,9 +25,9 @@ const Translator = () => {
 
   return (
     <div className="container mx-auto p-2 mt-5 mb-2 mr-10">
-      <div className="flex flex-col md:flex-row items-center">
+      <div className="flex flex-col md:flex-row justify-center items-center">
         <textarea
-          className="w-[450px] h-[150px] p-2 border border-gray-300 rounded-md resize-none"
+          className="w-[450px] h-[150px] p-2 text-gray-500 border border-gray-300 rounded-md resize-none text-3xl"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           placeholder="Nhập văn bản cần dịch..."
@@ -36,7 +36,7 @@ const Translator = () => {
         <div className="md:w-[100px]"></div> {/* Khoảng cách giữa hai textarea */}
 
         <textarea
-          className="w-[450px] h-[150px] p-2 border border-gray-300 rounded-md mt-2 md:mt-0 resize-none"
+          className="w-[450px] h-[150px] p-2 border text-gray-500 border-gray-300 rounded-md mt-2 md:mt-0 resize-none text-3xl"
           value={translatedText}
           onChange={(e) => setTranslatedText(e.target.value)}
           placeholder="Bản dịch sẽ hiện ở đây..."

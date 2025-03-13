@@ -31,17 +31,17 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(255, 33, 9, 0.75);
   z-index: 999; /* Đảm bảo overlay có thứ tự hiển thị ưu tiên ngay sau modal */
 `;
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 3px;
+  right: 20px;
   background: transparent;
   border: none;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   cursor: pointer;
 `;
 
@@ -62,9 +62,9 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
         <Overlay {...props}>{contentElement}</Overlay>
       )}
     >
-      <CloseButton onClick={onRequestClose}>&times;</CloseButton>
-      <h2 className="text-2xl mb-4">Delete Word</h2>
-      <p>Bạn có chắc chắn muốn xóa từ này không?</p>
+      <CloseButton className='text-gray-500' onClick={onRequestClose}>&times;</CloseButton>
+      <h2 className="text-3xl text-gray-500 mb-4">Delete Word</h2>
+      <p className="text-2xl text-gray-500">Bạn có chắc chắn muốn xóa từ này không?</p>
       <div className="flex justify-end space-x-4 mt-4">
         <button
           onClick={onRequestClose}

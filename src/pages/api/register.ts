@@ -1,3 +1,8 @@
+// HIỆN TẠI ĐANG KHÔNG DÙNG ĐÊN FILE NÀY
+// HIỆN TẠI ĐANG KHÔNG DÙNG ĐÊN FILE NÀY
+// HIỆN TẠI ĐANG KHÔNG DÙNG ĐÊN FILE NÀY
+
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { addUser } from '../../users';
 

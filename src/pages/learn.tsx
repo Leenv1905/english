@@ -1,22 +1,24 @@
 // pages/aboutUs.tsx
-
 import LayoutHome from '../components/home/LayoutHome';
 import Image from 'next/image';
 import lampImage from '../../public/lamp.png';
 import treeImage from '../../public/tree.png';
 import Link from 'next/link';
 import Translator from '../components/learn/Translator';
+import useAuthRedirect from '../hooks/useAuthRedirect';
 
 const Learn: React.FC = () => {
+  useAuthRedirect();
+  // Sử dụng hook `useAuthRedirect` để điều hướng đến trang đăng nhập nếu chưa đăng nhập
   return (
     <LayoutHome>
       <div className="relative h-screen overflow-hidden">
-        <div className="absolute bottom-2 left-2">
+        <div className="absolute bottom-30 left-2">
           <Image src={treeImage} alt="Tree" width={100} height={100} />
           {/* <Image src={laptopImage} alt="Laptop" width={500} height={500} /> */}
 
         </div>
-        <div className="absolute top-5 right-5">
+        <div className="absolute top-20 right-5">
           <Image src={lampImage} alt="Lamp" width={100} height={100} />
         </div>
         {/* <div className="flex flex-col items-center justify-center h-full relative z-10"> */}

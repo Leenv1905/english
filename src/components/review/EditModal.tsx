@@ -35,17 +35,17 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(2, 79, 32, 0.75);
   z-index: 999; /* Đảm bảo overlay có thứ tự hiển thị ưu tiên ngay sau modal */
 `;
 // Tạo màng đen khi mở modal
 const CloseButton = styled.button`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 3px;
+  right: 20px;
   background: transparent;
   border: none;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   cursor: pointer;
 `;
 
@@ -71,18 +71,18 @@ const EditModal: React.FC<EditModalProps> = ({
         <Overlay {...props}>{contentElement}</Overlay>
       )}
     >
-      <CloseButton onClick={onRequestClose}>&times;</CloseButton>
-      <h2 className="text-2xl mb-4">Edit Word</h2>
+      <CloseButton className="text-gray-500" onClick={onRequestClose}>&times;</CloseButton>
+      <h2 className="text-3xl text-gray-500 mb-4">Edit Word</h2>
       <div className="flex flex-col space-y-4">
         <input
           type="text"
-          className="p-2 border border-gray-300 rounded-md"
+          className="p-2 border text-2xl text-gray-500 border-gray-300 rounded-md"
           value={editEnglish}
           onChange={(e) => setEditEnglish(e.target.value)}
           placeholder="Edit English word"
         />
         <textarea
-          className="p-2 border border-gray-300 rounded-md"
+          className="p-2 border text-2xl text-gray-500 border-gray-300 rounded-md"
           value={editTranslation}
           onChange={(e) => setEditTranslation(e.target.value)}
           placeholder="Edit Translation"

@@ -142,14 +142,14 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ words }) => {
 
 
   return (
-    <div className="container mx-auto p-4 mt-0 md:mt-10">
+    <div className="container mx-auto pl-30 pr-30 md:mt-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {currentWords.map((word, index) => (
           <React.Fragment key={index}>
             <div className="relative w-full">
               <input
                 type="text"
-                className={`w-full h-[50px] p-2 border border-gray-300 rounded-md resize-none ${colors[indexOfFirstWord + index]}`}
+                className={`w-full h-[80px] p-2 border text-gray-500 text-2xl border-gray-300 rounded-md resize-none ${colors[indexOfFirstWord + index]}`}
                 value={showEnglish[indexOfFirstWord + index] ? word.english : inputs[indexOfFirstWord + index]}
                 onChange={(e) => handleChange(indexOfFirstWord + index, e.target.value)}
                 placeholder="Enter the word"
@@ -180,7 +180,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ words }) => {
             {/* NÚT EDIT Ở TRONG HAY NGOÀI TEXTAREA */}
             <div className="relative w-full flex items-center">
               <textarea
-                className="w-full h-[50px] p-2 border border-gray-300 rounded-md resize-none"
+                className="w-full h-[80px] p-2 border text-gray-500 text-2xl border-gray-300 rounded-md resize-none"
                 value={word.translation}
                 readOnly
               />
