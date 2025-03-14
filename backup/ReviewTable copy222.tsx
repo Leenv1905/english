@@ -1,18 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import EditModal from './EditModal';
-import DeleteModal from './DeleteModal';
-// import axios from 'axios'; // Import thư viện axios để gọi API
-
-interface Word {
-  id: number;
-  word: string;
-  meaning: string;
-  date: string;
-  maMember: string;
-}
+import EditModal from '../src/components/review/EditModal';
+import DeleteModal from '../src/components/review/DeleteModal';
+import axios from 'axios'; // Import thư viện axios để gọi API
 
 interface ReviewTableProps {
-  words: Word[];
+  words: { english: string; translation: string; date: string }[];
 }
 
 const ReviewTable: React.FC<ReviewTableProps> = ({ words }) => {
@@ -72,7 +64,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ words }) => {
 
     const newColors = [...colors];
     const newShowEnglish = [...showEnglish];
-    if (value.toLowerCase() === words[index].word.toLowerCase()) {
+    if (value.toLowerCase() === words[index].english.toLowerCase()) {
       newColors[index] = 'bg-green-200';
       newShowEnglish[index] = true;
     } else {
@@ -87,8 +79,8 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ words }) => {
 
   const openModal = (index: number) => {
     setCurrentWordIndex(index);
-    setEditEnglish(words[index].word);
-    setEditTranslation(words[index].meaning);
+    setEditEnglish(words[index].english);
+    setEditTranslation(words[index].translation);
     setIsModalOpen(true);
   };
 
@@ -100,7 +92,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ words }) => {
   const handleSaveEdit = () => {
     if (currentWordIndex !== null) {
       const newWords = [...words];
-      newWords[currentWordIndex] = { ...newWords[currentWordIndex], word: editEnglish, meaning: editTranslation };
+      newWords[currentWordIndex] = { ...newWords[currentWordIndex], english: editEnglish, translation: editTranslation };
       // CẬP NHẬT LẠI CÁC GIÁ TRỊ MỚI
       // ĐANG LÀM TEST
     }
@@ -154,12 +146,12 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ words }) => {
     <div className="container mx-auto pl-30 pr-30 md:mt-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {currentWords.map((word, index) => (
-          <React.Fragment key={word.id}>
+          <React.Fragment key={index}>
             <div className="relative w-full">
               <input
                 type="text"
                 className={`w-full h-[80px] p-2 border text-gray-500 text-2xl border-gray-300 rounded-md resize-none ${colors[indexOfFirstWord + index]}`}
-                value={showEnglish[indexOfFirstWord + index] ? word.word : inputs[indexOfFirstWord + index]}
+                value={showEnglish[indexOfFirstWord + index] ? word.english : inputs[indexOfFirstWord + index]}
                 onChange={(e) => handleChange(indexOfFirstWord + index, e.target.value)}
                 placeholder="Enter the word"
               />
@@ -190,7 +182,7 @@ const ReviewTable: React.FC<ReviewTableProps> = ({ words }) => {
             <div className="relative w-full flex items-center">
               <textarea
                 className="w-full h-[80px] p-2 border text-gray-500 text-2xl border-gray-300 rounded-md resize-none"
-                value={word.meaning}
+                value={word.translation}
                 readOnly
               />
               {/* <div className="relative" ref={(el) => (menuRefs.current[index] = el)}> */}

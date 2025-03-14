@@ -33,6 +33,7 @@ const Login: React.FC = () => {
     if (email === 'admin@gmail.com' && password === '123456') {
       alert('Login successful');
       localStorage.setItem('isLoggedIn', 'true'); // Lưu trạng thái đăng nhập vào localStorage
+      localStorage.setItem('maMember', '1'); // Giả định mã thành viên là 1
       router.push(redirect ? String(redirect) : '/'); // Điều hướng đến trang đích hoặc trang chủ
     } else {
       alert('Login failed');
