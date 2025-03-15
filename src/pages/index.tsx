@@ -11,9 +11,18 @@ const Home: React.FC = () => {
   const router = useRouter();
 // Sử dụng hook `useRouter` để điều hướng đến trang đăng nhập nếu chưa đăng nhập
 // Sau đó điều hướng đến trang cần truy cập
+  // const handleLinkClick = (href: string) => {
+  //   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  //   if (!isLoggedIn) {
+  //     router.push(`/user/login?redirect=${encodeURIComponent(href)}`);
+  //   } else {
+  //     router.push(href);
+  //   }
+  // };
+
   const handleLinkClick = (href: string) => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    if (!isLoggedIn) {
+    const token = localStorage.getItem('token');
+    if (!token) {
       router.push(`/user/login?redirect=${encodeURIComponent(href)}`);
     } else {
       router.push(href);

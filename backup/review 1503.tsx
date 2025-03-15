@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import LayoutHome from '../components/home/LayoutHome';
-import ReviewTable from '../components/review/ReviewTable';
+import LayoutHome from '../src/components/home/LayoutHome';
+import ReviewTable from '../src/components/review/ReviewTable';
 import noteImage from '../../public/note.png';
 import penImage from '../../public/pen.png';
 import Image from 'next/image';
-import useAuthRedirect from '../hooks/useAuthRedirect';
+import useAuthRedirect from '../src/hooks/useAuthRedirect';
 
 interface Word {
   id: number;
@@ -23,20 +23,16 @@ const Review: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // PHIÊN BẢN NÀY ĐÃ KẾT NỐI ĐƯỢC NỚI SERVER BACKEND THẬT
+  // TUY NHƯNG SERVER CHƯA CÓ AUTHENTICATION
+  // MÃ MEMBER ĐANG ĐƯỢC LƯU VÀ GỬI FAKE
   useEffect(() => {
     const fetchWords = async () => {
-      const token = localStorage.getItem('token');  // Lấy token từ LocalStorage
-      if (!token) {
-        console.error('Chưa đăng nhập!');
-        return;
-      }
+      const maMember = localStorage.getItem('maMember'); // Lấy maMember từ localStorage
+      if (!maMember) return setError('User chưa đăng nhập!');
       try {
-        const response = await axios.get('http://localhost:6868/api/newwords', {
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
-        });
+        // const response = await axios.get('http://localhost:6868/api/newwords?maMember=${maMember}');
+        const response = await axios.get(`http://localhost:6868/api/newwords?maMember=${maMember}`);
 
         // Dùng backtick (``) thay vì ' ' để nội suy biến vào URL
         // Hoặc truyền params trong axios.get() để làm sạch code (NÊN DÙNG)

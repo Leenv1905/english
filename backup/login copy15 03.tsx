@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import LayoutHome from '../../components/home/LayoutHome';
+import LayoutHome from '../src/components/home/LayoutHome';
 import axios from 'axios';
 
 const Login: React.FC = () => {
@@ -32,7 +32,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     setError(null); // Xóa thông báo lỗi trước đó
 
-    // Giả định thông tin đăng nhập
+    // Giả định thông tin đăng nhập BACKENF FAKE
     //   if (email === 'admin@gmail.com' && password === '123456') {
     //     alert('Login successful');
     //     localStorage.setItem('isLoggedIn', 'true'); // Lưu trạng thái đăng nhập vào localStorage
@@ -42,17 +42,19 @@ const Login: React.FC = () => {
     //     alert('Login failed');
     //   }
     // };
+    // PHIEN BAN TEST NAY ĐÃ CHẠY ỔN ĐỊNH
 
     // ĐĂNG NHẬP VỚI BACKEND THẬT
     try {
       const reponse = await axios.post('http://localhost:6868/api/auth/login', { email, password });
       if (reponse.status === 200) {
         const { token } = reponse.data;
-        alert('Login successful');
+
         // Lưu token vào LocalStorage
         localStorage.setItem('token', token);
-        localStorage.setItem('isLoggedIn', 'true'); // Lưu trạng thái đăng nhập vào localStorage
-        router.push(redirect ? String(redirect) : '/'); // Điều hướng đến trang đích hoặc trang chủ
+
+        alert('Login successful');
+        router.push(redirect ? String(redirect) : '/');
       }
     } catch (err) {
       setError('Email hoặc mật khẩu không đúng');
@@ -80,7 +82,7 @@ const Login: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {error && <p className="text-red-500">{error}</p>}
+            {error && <p className="text-red-500">{error}</p>}
           <button
             type="submit"
             className="bg-blue-500 text-white py-2 px-4 rounded-md"

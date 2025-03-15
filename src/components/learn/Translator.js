@@ -1,26 +1,63 @@
 // components/Translator.js
 // PHẢI SỬA PHẦN CUỐI, IMPORT DẠNG TỆN Ở TỆP TSCONFIG.JSON
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Translator = () => {
   const [inputText, setInputText] = useState('');
   const [translatedText, setTranslatedText] = useState('');
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
-  useEffect(() => {
-    // Giả lập quá trình dịch tự động
-    const translateText = () => {
-      setTranslatedText(inputText.split('').reverse().join(''));
+const handleSave = async () => {
+    // Reset thông báo trước đó
+    setError(null);
+    setSuccess(null);
+
+    // Validation: Kiểm tra cả hai textarea không được để trống
+    if (!inputText.trim()) {
+      setError('Vui lòng nhập từ vựng!');
+      return;
+    }
+    if (!translatedText.trim()) {
+      setError('Vui lòng nhập nghĩa của từ!');
+      return;
+    }
+
+    // Lấy token từ localStorage
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('Bạn cần đăng nhập để lưu từ vựng!');
+      return;
+    }
+
+    // Chuẩn bị dữ liệu gửi lên backend (không gửi date)
+    const newWordData = {
+      word: inputText,
+      meaning: translatedText,
     };
-    translateText();
-  }, [inputText]);
 
-  const handleSave = () => {
-    // Logic để lưu bản dịch vào database sau khi kết nối backend
-    console.log('Saving translation:', translatedText);
+    try {
+      const response = await axios.post(
+        'http://localhost:6868/api/newwords',
+        newWordData,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-    // Reset dữ liệu trên các textarea về trạng thái ban đầu
-    setInputText('');
-    setTranslatedText('');
+      if (response.status === 200) {
+        setSuccess('Lưu từ vựng thành công!');
+        setInputText(''); // Reset input
+        setTranslatedText(''); // Reset output
+      }
+    } catch (err) {
+      setError('Không thể lưu từ vựng. Vui lòng thử lại!');
+      console.error('Error saving word:', err);
+    }
   };
 
   return (
@@ -30,7 +67,7 @@ const Translator = () => {
           className="w-[450px] h-[150px] p-2 text-gray-500 border border-gray-300 rounded-md resize-none text-3xl"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-          placeholder="Nhập văn bản cần dịch..."
+          placeholder="Nhập từ vựng mới..."
         />
 
         <div className="md:w-[100px]"></div> {/* Khoảng cách giữa hai textarea */}
@@ -39,7 +76,7 @@ const Translator = () => {
           className="w-[450px] h-[150px] p-2 border text-gray-500 border-gray-300 rounded-md mt-2 md:mt-0 resize-none text-3xl"
           value={translatedText}
           onChange={(e) => setTranslatedText(e.target.value)}
-          placeholder="Bản dịch sẽ hiện ở đây..."
+          placeholder="Nhập nghĩa của từ vựng ..."
         />
       </div>
       <div className="flex justify-center mt-5"> {/* Căn giữa nút Save và thêm margin top */}
@@ -50,6 +87,8 @@ const Translator = () => {
           Save
         </button>
       </div>
+      {success && <p className="text-green-500 text-center mt-2">{success}</p>}
+      {error && <p className="text-red-500 text-center mt-2">{error}</p>}
     </div>
   );
 };
